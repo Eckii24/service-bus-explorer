@@ -63,7 +63,7 @@
                                 FontSize="11"
                                 Foreground="#2196F3"
                                 TextWrapping="Wrap"
-                                 Margin="0,8,0,0" />
+                                Margin="0,8,0,0" />
                  </Grid>
              </TabItem>
 

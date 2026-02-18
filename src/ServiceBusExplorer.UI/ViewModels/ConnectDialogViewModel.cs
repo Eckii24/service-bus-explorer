@@ -72,7 +72,7 @@ public partial class ConnectDialogViewModel : ObservableObject
                 }
 
                  // Validate namespace format
-                 if (!Namespace.EndsWith(".servicebus.windows.net", StringComparison.OrdinalIgnoreCase))
+                 if (!Namespace.Trim().EndsWith(".servicebus.windows.net", StringComparison.OrdinalIgnoreCase))
                  {
                      ErrorMessage = "Namespace must be in format: myservicebus.servicebus.windows.net";
                      return;
