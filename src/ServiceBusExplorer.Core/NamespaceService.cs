@@ -1,5 +1,4 @@
-﻿using Azure.Messaging.ServiceBus.Administration;
-using ServiceBusExplorer.Core.Models;
+﻿using ServiceBusExplorer.Core.Models;
 using ServiceBusExplorer.Infrastructure;
 using ServiceBusExplorer.Infrastructure.Models;
 
