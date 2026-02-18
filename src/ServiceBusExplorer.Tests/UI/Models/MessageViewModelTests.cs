@@ -1,7 +1,7 @@
 #nullable disable
+using System.ComponentModel;
 using FluentAssertions;
 using ServiceBusExplorer.UI.Models;
-using System.ComponentModel;
 
 namespace ServiceBusExplorer.Tests.UI.Models;
 

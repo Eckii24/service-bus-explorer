@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Identity;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -22,6 +23,7 @@ public partial class ConnectDialogViewModel : ObservableObject
 
     // Azure Credentials tab
     [ObservableProperty] private string? @namespace;
+    [ObservableProperty] private int selectedCredentialMethodIndex = 0;
 
     // Shared state
     [ObservableProperty] private bool isConnecting = false;
@@ -69,28 +71,30 @@ public partial class ConnectDialogViewModel : ObservableObject
                     return;
                 }
 
-                // Validate namespace format
-                if (!Namespace.EndsWith(".servicebus.windows.net", StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorMessage = "Namespace must be in format: myservicebus.servicebus.windows.net";
-                    return;
-                }
+                 // Validate namespace format
+                 if (!Namespace.Trim().EndsWith(".servicebus.windows.net", StringComparison.OrdinalIgnoreCase))
+                 {
+                     ErrorMessage = "Namespace must be in format: myservicebus.servicebus.windows.net";
+                     return;
+                 }
 
-                // Create Interactive Browser Credential
-                // This will open a browser window for authentication
-                try
-                {
-                    var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions
-                    {
-                        TenantId = "common", // Allow any tenant (work, school, or personal accounts)
-                        ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46", // Azure CLI client ID (well-known, safe to use)
-                        RedirectUri = new Uri("http://localhost") // Standard OAuth redirect for desktop apps
-                    });
+                 try
+                 {
+                     TokenCredential credential = SelectedCredentialMethodIndex switch
+                     {
+                         0 => new AzureCliCredential(),
+                         _ => new InteractiveBrowserCredential(new InteractiveBrowserCredentialOptions
+                         {
+                             TenantId = "common", // Allow any tenant (work, school, or personal accounts)
+                             ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46", // Azure CLI client ID (well-known, safe to use)
+                             RedirectUri = new Uri("http://localhost") // Standard OAuth redirect for desktop apps
+                         })
+                     };
 
-                    authContext = new TokenCredentialAuthContext(Namespace, credential);
-                }
-                catch (Exception ex)
-                {
+                     authContext = new TokenCredentialAuthContext(Namespace, credential);
+                 }
+                 catch (Exception ex)
+                 {
                     ErrorMessage = $"Failed to create credential: {ex.Message}";
                     return;
                 }
