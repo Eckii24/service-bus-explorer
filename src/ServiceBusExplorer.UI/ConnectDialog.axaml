@@ -33,30 +33,39 @@
                 </Grid>
             </TabItem>
 
-            <!-- Tab 2: Azure Credentials -->
-            <TabItem Header="Azure Credentials">
-                <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" Margin="0,16,0,0">
-                    <TextBlock Grid.Row="0"
-                               Text="Service Bus Namespace:"
-                               Margin="0,0,0,8" />
-                    <TextBox Grid.Row="1"
-                             Text="{Binding Namespace}"
-                             Watermark="myservicebus.servicebus.windows.net"
-                             Margin="0,0,0,8"
-                             IsEnabled="{Binding !IsConnecting}" />
-                    <TextBlock Grid.Row="2"
-                               Text="Full namespace URL (without https://)"
-                               FontSize="11"
-                               Foreground="Gray"
-                               Margin="0,0,0,8" />
-                    <TextBlock Grid.Row="3"
-                               Text="A browser window will open for Azure authentication when you connect."
-                               FontSize="11"
-                               Foreground="#2196F3"
-                               TextWrapping="Wrap"
-                               Margin="0,8,0,0" />
-                </Grid>
-            </TabItem>
+             <!-- Tab 2: Azure Credentials -->
+             <TabItem Header="Azure Credentials">
+                 <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*" Margin="0,16,0,0">
+                     <TextBlock Grid.Row="0"
+                                Text="Service Bus Namespace:"
+                                Margin="0,0,0,8" />
+                     <TextBox Grid.Row="1"
+                              Text="{Binding Namespace}"
+                              Watermark="myservicebus.servicebus.windows.net"
+                              Margin="0,0,0,8"
+                              IsEnabled="{Binding !IsConnecting}" />
+                     <TextBlock Grid.Row="2"
+                                Text="Full namespace URL (without https://)"
+                                FontSize="11"
+                                Foreground="Gray"
+                                Margin="0,0,0,8" />
+                     <TextBlock Grid.Row="3"
+                                Text="Authentication Method:"
+                                Margin="0,8,0,8" />
+                     <ComboBox Grid.Row="4"
+                               SelectedIndex="{Binding SelectedCredentialMethodIndex}"
+                               IsEnabled="{Binding !IsConnecting}">
+                         <ComboBoxItem Content="Azure CLI (az login)" />
+                         <ComboBoxItem Content="Interactive Browser" />
+                     </ComboBox>
+                     <TextBlock Grid.Row="5"
+                                Text="Azure CLI requires Azure CLI installed and you must run 'az login' first. Interactive Browser will open a browser window."
+                                FontSize="11"
+                                Foreground="#2196F3"
+                                TextWrapping="Wrap"
+                                 Margin="0,8,0,0" />
+                 </Grid>
+             </TabItem>
 
         </TabControl>
 
